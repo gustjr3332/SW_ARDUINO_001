@@ -1,0 +1,46 @@
+// 핀 정의
+const int flameSensorPin = A0;
+const int redPin = 9;
+const int greenPin = 10;
+const int bluePin = 11;
+const int buzzerPin = 8;
+
+const int flameThreshold = 500;
+
+void setup() {
+  pinMode(flameSensorPin, INPUT);
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int flameValue = analogRead(flameSensorPin);
+  Serial.print("Flame Sensor Value: ");
+  Serial.println(flameValue);
+
+  if (flameValue < flameThreshold) {
+    // 불꽃 감지됨: 빨간색 LED + 경보음
+    digitalWrite(redPin, HIGH);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, LOW);
+
+    tone(buzzerPin, 1000);  // 1kHz 경고음
+    delay(900);
+    tone(buzzerPin, 800);
+    delay(900);
+  } else {
+    // 불꽃 없음: LED OFF, 부저 OFF
+    digitalWrite(redPin, LOW);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, LOW);
+
+    noTone(buzzerPin);
+  }
+
+  delay(100);
+}
+
