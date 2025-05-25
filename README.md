@@ -6,6 +6,4 @@ setup문과 loop문은 오직 하나여야 하기떄문에 모든 작업을 전�
 
 //main.cpp -- setup,loop 실행하는 main 파일
 
-//motor.cpp -- stepper motor 작동 코드 작성한 함수 파일
-
-//motor.h -- 함수 작동위한 헤더 라이브러리 파일
+각 함수문 따로 설정 후 loo[,main 안에는 함수 호출만 있도록...
