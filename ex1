@@ -1,0 +1,52 @@
+// 핀 정의
+const int flameSensorPin = A0;
+const int gasSensorPin = A1;       // 유해가스 센서 핀 추가
+const int redPin = 9;
+const int greenPin = 10;
+const int bluePin = 11;
+const int buzzerPin = 8;
+
+const int flameThreshold = 500;
+const int gasThreshold = 400;      // 유해가스 감지 임계값 (센서에 따라 조정 가능)
+
+void setup() {
+  pinMode(flameSensorPin, INPUT);
+  pinMode(gasSensorPin, INPUT);    // 유해가스 센서 핀 설정
+  pinMode(redPin, OUTPUT);
+  pinMode(greenPin, OUTPUT);
+  pinMode(bluePin, OUTPUT);
+  pinMode(buzzerPin, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int flameValue = analogRead(flameSensorPin);
+  int gasValue = analogRead(gasSensorPin);
+
+  Serial.print("Flame Sensor Value: ");
+  Serial.print(flameValue);
+  Serial.print(" | Gas Sensor Value: ");
+  Serial.println(gasValue);
+
+  if (flameValue < flameThreshold || gasValue > gasThreshold) {
+    // 불꽃 또는 유해가스 감지됨: 빨간색 LED + 경보음
+    digitalWrite(redPin, HIGH);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, LOW);
+
+    tone(buzzerPin, 1000);  // 1kHz 경고음
+    delay(900);
+    tone(buzzerPin, 800);
+    delay(900);
+  } else {
+    // 위험 없음: LED OFF, 부저 OFF
+    digitalWrite(redPin, LOW);
+    digitalWrite(greenPin, LOW);
+    digitalWrite(bluePin, LOW);
+
+    noTone(buzzerPin);
+  }
+
+  delay(100);
+}
