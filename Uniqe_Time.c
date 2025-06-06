@@ -9,7 +9,7 @@ int main(){
     while(1){
     scanf("%d/%d %d분",&x,&y,&a);
     if(x==0) {
-        printf("%d시간 %d분입니다!", sum/60, sum%60);
+        printf("총%d분 = %d시간 %d분입니다!",sum, sum/60, sum%60);
         break;
     }
     sum+=a;
